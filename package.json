@@ -1,0 +1,46 @@
+{
+  "name": "egg-rds",
+  "version": "0.0.1",
+  "description": "rds plugin for egg",
+  "eggPlugin": {
+    "name": "rds"
+  },
+  "keywords": [
+    "egg",
+    "plugin"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "egg-ci": "1",
+    "egg-bin": "1",
+    "autod": "2",
+    "eslint": "3",
+    "eslint-config-egg": "3",
+    "should": "8",
+    "supertest": "1"
+  },
+  "engines": {
+    "node": ">=4.0.0"
+  },
+  "scripts": {
+    "test": "npm run lint && npm run test-local",
+    "test-local": "egg-bin test",
+    "cov": "egg-bin cov",
+    "lint": "eslint --ext js . --fix",
+    "ci": "npm run lint && npm run cov",
+    "autod": "autod"
+  },
+  "ci": {
+    "version": "4, 6"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eggjs/egg-rds.git"
+  },
+  "bugs": {
+    "url": "https://github.com/eggjs/egg/issues"
+  },
+  "homepage": "https://github.com/eggjs/egg-rds#readme",
+  "author": "jtyjty99999",
+  "license": "MIT"
+}
