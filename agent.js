@@ -3,5 +3,5 @@
 const rds = require('./lib/rds');
 
 module.exports = agent => {
-  rds(agent);
+  if (agent.config.rds.agent) rds(agent);
 };
