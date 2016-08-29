@@ -3,5 +3,5 @@
 const rds = require('./lib/rds');
 
 module.exports = agent => {
-  if (agent.config.rds.agent) rds(agent);
+  if (agent.config.mysql.agent) rds(agent);
 };

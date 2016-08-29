@@ -1,23 +1,30 @@
 {
-  "name": "egg-rds",
+  "name": "egg-mysql",
   "version": "0.0.1",
-  "description": "rds plugin for egg",
+  "description": "mysql plugin for egg",
   "eggPlugin": {
-    "name": "rds"
+    "name": "mysql"
   },
   "keywords": [
     "egg",
     "plugin"
   ],
-  "dependencies": {},
+  "dependencies": {
+    "ali-rds": "~2.6.0",
+    "co": "~4.6.0"
+  },
   "devDependencies": {
-    "egg-ci": "1",
-    "egg-bin": "1",
     "autod": "2",
+    "egg": "~0.1.0",
+    "egg-bin": "1",
+    "egg-ci": "1",
+    "egg-mock": "0.0.4",
     "eslint": "3",
     "eslint-config-egg": "3",
+    "pedding": "^1.0.0",
     "should": "8",
-    "supertest": "1"
+    "supertest": "1",
+    "utility": "^1.8.0"
   },
   "engines": {
     "node": ">=4.0.0"
@@ -35,12 +42,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/eggjs/egg-rds.git"
+    "url": "git+https://github.com/eggjs/egg-mysql.git"
   },
   "bugs": {
     "url": "https://github.com/eggjs/egg/issues"
   },
-  "homepage": "https://github.com/eggjs/egg-rds#readme",
+  "homepage": "https://github.com/eggjs/egg-mysql#readme",
   "author": "jtyjty99999",
   "license": "MIT"
 }
