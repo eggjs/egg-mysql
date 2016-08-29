@@ -6,7 +6,7 @@ exports.mysql = {
 	  port: 3307,
 	  user: 'root',
 	  password: '',
-	  database: 'test',
+	  database: 'test'
   },
-  agent: true,
+  agent: true
 };

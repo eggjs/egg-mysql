@@ -9,7 +9,6 @@ exports.mysql = {
       password: '',
       database: 'test',
     },
-    ,
     db2: {
       host: '127.0.0.1',
       port: 3307,

@@ -4,7 +4,7 @@ exports.mysql = {
   host: '127.0.0.1',
   port: 3307,
   user: 'root',
-  password: '',
+  password: '22221',
   database: 'test',
   app:false
   // host: env.ALI_SDK_RDS_HOST || 'localhost',

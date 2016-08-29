@@ -68,6 +68,7 @@ describe('test/mysql.test.js', () => {
 
   it('should update successfully', function* () {
     const user = yield app.mysql.queryOne('select * from npm_auth order by id desc limit 10');
+    console.log(user);
     const result = yield app.mysql.update('npm_auth', { id: user.id, user_id: `79744-${uid}-update` });
     result.affectedRows.should.eql(1);
   });
@@ -100,15 +101,17 @@ describe('test/mysql.test.js', () => {
     val.should.equal('\'\\\'\\"?><=!@#\'');
   });
 
-  it('should app error when password wrong', done => {
+  it.only('should app error when password wrong', done => {
     mm(process.env, 'EGG_LOG', 'NONE');
     const app = mm.app({
       baseDir: 'apps/mysqlapp-wrong-pwd',
       plugin: 'mysql',
     });
+
     app.ready(() => {
       throw new Error('should not run this');
     });
+
     app.on('error', function(err) {
       if (err.message.indexOf('ER_ACCESS_DENIED_ERROR') !== -1) {
         done();
@@ -138,7 +141,7 @@ describe('test/mysql.test.js', () => {
       plugin: 'mysql',
     });
     app.ready(() => {
-      app.stop();
+      app.close();
       const result = fs.readFileSync(path.join(__dirname, './fixtures/apps/mysqlapp/run/agent_result.json'), 'utf8');
       result.should.match(/\[\{"currentTime":"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z"\}\]/);
       done();
@@ -163,7 +166,7 @@ describe('test/mysql.test.js', () => {
     }, {});
     should.exist(result.row);
     result.row.user_id.should.be.a.String;
-    result.row.password.should.equal('1');
+    result.row.password.should.equal('3');
   });
 
   describe('newConfig', () => {
@@ -177,7 +180,7 @@ describe('test/mysql.test.js', () => {
     });
 
     after(() => {
-      app.stop();
+      app.close();
     });
 
     it('should new config agent.mysql work', done => {
@@ -206,7 +209,7 @@ describe('test/mysql.test.js', () => {
     });
 
     after(() => {
-      app.stop();
+      app.close();
     });
 
     it('should new config agent.mysql work', done => {
