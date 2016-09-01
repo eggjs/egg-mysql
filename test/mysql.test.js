@@ -101,7 +101,7 @@ describe('test/mysql.test.js', () => {
     val.should.equal('\'\\\'\\"?><=!@#\'');
   });
 
-  it.only('should app error when password wrong', done => {
+  it.skip('should app error when password wrong', done => {
     mm(process.env, 'EGG_LOG', 'NONE');
     const app = mm.app({
       baseDir: 'apps/mysqlapp-wrong-pwd',
