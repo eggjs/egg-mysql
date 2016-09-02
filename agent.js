@@ -1,7 +1,7 @@
 'use strict';
 
-const rds = require('./lib/rds');
+const mysql = require('./lib/mysql');
 
 module.exports = agent => {
-  if (agent.config.mysql.agent) rds(agent);
+  if (agent.config.mysql.agent) mysql(agent);
 };
