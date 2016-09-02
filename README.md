@@ -25,7 +25,7 @@ Aliyun rds client(support mysql portocal) for egg framework
 ## Install
 
 ```bash
-$ npm i egg-mysql
+$ npm i egg-mysql --save
 ```
 
 MySQL Plugin 是为 egg 提供 MySQL 数据库访问的功能
@@ -34,7 +34,7 @@ MySQL Plugin 是为 egg 提供 MySQL 数据库访问的功能
 
 ## 配置
 
-修改 `config/plugin.js` 启动 MySQL 插件:
+修改 `${app_root}/config/plugin.js` 启动 MySQL 插件:
 
 ```js
 exports.mysql = {
@@ -43,7 +43,7 @@ exports.mysql = {
 };
 ```
 
-config.js 配置数据库相关的信息：
+在 `${app_root}/config/config.default.js` 配置数据库相关的信息：
 
 ### 单数据源
 
