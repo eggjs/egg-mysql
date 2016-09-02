@@ -23,21 +23,23 @@ describe('test/mysql.test.js', () => {
     yield app.ready();
 
     should.exist(app.mysql);
+  });
 
+  beforeEach(function* () {
     // 先初始化测试数据，避免为空
     try {
-      yield app.mysql.query(`insert into npm_auth set user_id = 'chair-${uid}-1', password = '1'`);
-      yield app.mysql.query(`insert into npm_auth set user_id = 'chair-${uid}-2', password = '2'`);
-      yield app.mysql.query(`insert into npm_auth set user_id = 'chair-${uid}-3', password = '3'`);
-      yield app.mysql.queryOne(`select * from npm_auth where user_id = 'chair-${uid}-3'`);
+      yield app.mysql.query(`insert into npm_auth set user_id = 'egg-${uid}-1', password = '1'`);
+      yield app.mysql.query(`insert into npm_auth set user_id = 'egg-${uid}-2', password = '2'`);
+      yield app.mysql.query(`insert into npm_auth set user_id = 'egg-${uid}-3', password = '3'`);
+      yield app.mysql.queryOne(`select * from npm_auth where user_id = 'egg-${uid}-3'`);
     } catch (err) {
       console.log(err);
     }
   });
 
-  after(function* () {
+  afterEach(function* () {
     // 清空测试数据
-    yield app.mysql.query(`delete from npm_auth where user_id like 'chair-${uid}%'`);
+    yield app.mysql.query(`delete from npm_auth where user_id like 'egg-${uid}%'`);
   });
 
   after(done => {
@@ -68,7 +70,6 @@ describe('test/mysql.test.js', () => {
 
   it('should update successfully', function* () {
     const user = yield app.mysql.queryOne('select * from npm_auth order by id desc limit 10');
-    console.log(user);
     const result = yield app.mysql.update('npm_auth', { id: user.id, user_id: `79744-${uid}-update` });
     result.affectedRows.should.eql(1);
   });
@@ -99,24 +100,6 @@ describe('test/mysql.test.js', () => {
   it('should escape value', () => {
     const val = app.mysql.escape('\'"?><=!@#');
     val.should.equal('\'\\\'\\"?><=!@#\'');
-  });
-
-  it.skip('should app error when password wrong', done => {
-    mm(process.env, 'EGG_LOG', 'NONE');
-    const app = mm.app({
-      baseDir: 'apps/mysqlapp-wrong-pwd',
-      plugin: 'mysql',
-    });
-
-    app.ready(() => {
-      throw new Error('should not run this');
-    });
-
-    app.on('error', function(err) {
-      if (err.message.indexOf('ER_ACCESS_DENIED_ERROR') !== -1) {
-        done();
-      }
-    });
   });
 
   it('should agent error when password wrong on multi clients', done => {
@@ -161,7 +144,7 @@ describe('test/mysql.test.js', () => {
 
   it('should queryOne work on transaction', function* () {
     const result = yield app.mysql.beginTransactionScope(function* (conn) {
-      const row = yield conn.queryOne('select * from npm_auth limit 10');
+      const row = yield conn.queryOne('select * from npm_auth order by id desc limit 10');
       return { row };
     }, {});
     should.exist(result.row);

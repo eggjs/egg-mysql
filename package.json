@@ -17,7 +17,6 @@
     "autod": "2",
     "egg": "~0.1.0",
     "egg-bin": "1",
-    "egg-ci": "1",
     "egg-mock": "0.0.4",
     "eslint": "3",
     "eslint-config-egg": "3",
@@ -31,7 +30,7 @@
   },
   "scripts": {
     "test": "npm run lint && npm run test-local",
-    "test-local": "egg-bin test",
+    "test-local": "egg-bin test --require ./test/prepare.js",
     "cov": "egg-bin cov",
     "lint": "eslint --ext js . --fix",
     "ci": "npm run lint && npm run cov",
