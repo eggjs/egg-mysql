@@ -45,7 +45,7 @@ exports.mysql = {
 
 config.js 配置数据库相关的信息：
 
-#### 单数据源
+### 单数据源
 
 ```js
 exports.mysql = {
@@ -58,7 +58,7 @@ exports.mysql = {
     // 用户名
     user: 'mobile_pub',
     // 密码
-    password: '-7cda29b2eef25d0e',
+    password: 'password',
     // 数据库名
     database: 'mobile_pub',    
   },
@@ -69,7 +69,14 @@ exports.mysql = {
 };
 ```
 
-#### 多数据源
+使用方式：
+
+```js
+app.mysql.query(sql, values); // 单实例可以直接通过 app.mysql 访问
+```
+
+
+### 多数据源
 
 ```js
 exports.mysql = {
@@ -83,7 +90,7 @@ exports.mysql = {
       // 用户名
       user: 'mobile_pub',
       // 密码
-      password: '-7cda29b2eef25d0e',
+      password: 'password',
       // 数据库名
       database: 'mobile_pub',
     },
@@ -101,7 +108,7 @@ exports.mysql = {
 };
 ```
 
-`使用方式`
+使用方式：
 
 ```js
 const client1 = app.mysql.get('client1');
@@ -178,7 +185,7 @@ try {
 }
 ```
 
-#### 自动控制：Transaction with scope
+### 自动控制：Transaction with scope
 
 - API：`*beginTransactionScope(scope, ctx)`
   - `scope`: 一个 generatorFunction，在这个函数里面执行这次事务的所有 sql 语句。
