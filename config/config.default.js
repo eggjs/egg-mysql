@@ -5,11 +5,10 @@ exports.mysql = {
     database: null,
     connectionLimit: 5,
   },
-  // 在 app 上初始化
   app: true,
-  // 在 agent 上初始化
   agent: false,
-  // 单数据库
+
+  // Single Database
   // client: {
   //   host: 'host',
   //   port: 'port',
@@ -17,7 +16,8 @@ exports.mysql = {
   //   password: 'password',
   //   database: 'database',
   // },
-  // 多数据库
+
+  // Multi Databases
   // clients: {
   //   db1: {
   //     host: 'host',
