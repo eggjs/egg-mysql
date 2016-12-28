@@ -22,7 +22,7 @@
 
 MySQL 插件是为 egg 提供 MySQL 数据库访问的功能
 
-此插件基于 [ali-rds](https://github.com/ali-sdk/ali-rds) 实现一个简单的配置封装，具体使用方法你还需要阅读 [ali-rds](https://github.com/ali-sdk/ali-rds) 的文档。
+此插件基于 [ali-rds](https://github.com/ali-sdk/ali-rds) 实现一个简单的配置封装，具体使用方法你还需要阅读 [ali-rds] 的文档。
 
 ## 安装
 
@@ -113,6 +113,30 @@ client1.query(sql, values);
 
 const client2 = app.mysql.get('db2');
 client2.query(sql, values);
+```
+
+## 扩展
+
+### app.js
+
+#### app.mysql
+
+如果开启了 `config.mysql.app = true`，则会在 app 上注入 [ali-rds] 客户端 的 [Singleton 单例](https://github.com/eggjs/egg/blob/master/lib/core/singleton.js)。
+
+```js
+app.mysql.query(sql);
+app.mysql.get('db1').query(sql);
+```
+
+### agent.js
+
+#### agent.mysql
+
+如果开启了 `config.mysql.agent = true`，则会在 agent 上注入 [ali-rds] 客户端 的 [Singleton 单例](https://github.com/eggjs/egg/blob/master/lib/core/singleton.js)。
+
+```js
+agent.mysql.query(sql);
+agent.mysql.get('db1').query(sql);
 ```
 
 ## CRUD 使用指南
@@ -243,3 +267,6 @@ Please open an issue [here](https://github.com/eggjs/egg/issues).
 ## License
 
 [MIT](LICENSE)
+
+
+[ali-rds]: https://github.com/ali-sdk/ali-rds

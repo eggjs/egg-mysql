@@ -31,7 +31,7 @@
     "test": "npm run lint && npm run test-local",
     "test-local": "egg-bin test",
     "cov": "egg-bin cov",
-    "lint": "eslint --ext js . --fix",
+    "lint": "eslint --ext js .",
     "ci": "npm run lint && npm run cov",
     "autod": "autod"
   },
