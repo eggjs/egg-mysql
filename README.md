@@ -56,13 +56,13 @@ exports.mysql = {
     // port
     port: '3306',
     // username
-    user: 'mobile_pub',
+    user: 'test_user',
     // password
-    password: 'password',
+    password: 'test_password',
     // database
-    database: 'mobile_pub',    
+    database: 'test',    
   },
-  // load into app, default is open 
+  // load into app, default is open
   app: true,
   // load into agent, default is close
   agent: false,
@@ -82,17 +82,17 @@ app.mysql.query(sql, values); // you can access to simple database instance by u
 exports.mysql = {
   clients: {
     // clientId, access the client instance by app.mysql.get('clientId')
-    mypay1: {
+    db1: {
       // host
       host: 'mysql.com',
       // port
       port: '3306',
       // username
-      user: 'mobile_pub',
+      user: 'test_user',
       // password
-      password: 'password',
+      password: 'test_password',
       // database
-      database: 'mobile_pub',
+      database: 'test',
     },
     // ...
   },
@@ -101,7 +101,7 @@ exports.mysql = {
 
   },
 
-  // load into app, default is open 
+  // load into app, default is open
   app: true,
   // load into agent, default is close
   agent: false,
@@ -111,10 +111,10 @@ exports.mysql = {
 Usage:
 
 ```js
-const client1 = app.mysql.get('client1');
+const client1 = app.mysql.get('db1');
 client1.query(sql, values);
 
-const client2 = app.mysql.get('client2');
+const client2 = app.mysql.get('db2');
 client2.query(sql, values);
 ```
 
@@ -191,7 +191,7 @@ try {
   - `scope`: A generatorFunction which will execute all sqls of this transaction.
   - `ctx`: The context object of current request, it will ensures that even in the case of a nested transaction, there is only one active transaction in a request at the same time.
 - adventage: easy to use, as if there is no transaction in your code.
-- disadvantage: all transation will be successful or failed, cannot control precisely 
+- disadvantage: all transation will be successful or failed, cannot control precisely
 
 ```js
 const result = yield app.mysql.beginTransactionScope(function* (conn) {

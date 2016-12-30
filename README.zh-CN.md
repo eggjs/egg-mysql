@@ -20,21 +20,19 @@
 [download-image]: https://img.shields.io/npm/dm/egg-mysql.svg?style=flat-square
 [download-url]: https://npmjs.org/package/egg-mysql
 
-Aliyun rds client(support mysql portocal) for egg framework
+MySQL 插件是为 egg 提供 MySQL 数据库访问的功能
 
-## Install
+此插件基于 [ali-rds](https://github.com/ali-sdk/ali-rds) 实现一个简单的配置封装，具体使用方法你还需要阅读 [ali-rds] 的文档。
+
+## 安装
 
 ```bash
 $ npm i egg-mysql --save
 ```
 
-MySQL Plugin 是为 egg 提供 MySQL 数据库访问的功能
-
-此插件基于 [ali-rds](https://github.com/ali-sdk/ali-rds) 实现一个简单的配置封装，具体使用方法你还需要阅读 [ali-rds](https://github.com/ali-sdk/ali-rds) 的文档。
-
 ## 配置
 
-修改 `${app_root}/config/plugin.js` 启动 MySQL 插件:
+通过 `config/plugin.js` 配置启动 MySQL 插件:
 
 ```js
 exports.mysql = {
@@ -43,24 +41,24 @@ exports.mysql = {
 };
 ```
 
-在 `${app_root}/config/config.default.js` 配置数据库相关的信息：
+在 `config/config.${env}.js` 配置各个环境的数据库连接信息：
 
 ### 单数据源
 
 ```js
 exports.mysql = {
-  // 数据库信息配置
+  // 单数据库信息配置
   client: {
     // host
     host: 'mysql.com',
     // 端口号
     port: '3306',
     // 用户名
-    user: 'mobile_pub',
+    user: 'test_user',
     // 密码
-    password: 'password',
+    password: 'test_password',
     // 数据库名
-    database: 'mobile_pub',    
+    database: 'test',    
   },
   // 是否加载到 app 上，默认开启
   app: true,
@@ -75,24 +73,23 @@ exports.mysql = {
 app.mysql.query(sql, values); // 单实例可以直接通过 app.mysql 访问
 ```
 
-
 ### 多数据源
 
 ```js
 exports.mysql = {
   clients: {
     // clientId, 获取client实例，需要通过 app.mysql.get('clientId') 获取
-    mypay1: {
+    db1: {
       // host
       host: 'mysql.com',
       // 端口号
       port: '3306',
       // 用户名
-      user: 'mobile_pub',
+      user: 'test_user',
       // 密码
-      password: 'password',
+      password: 'test_password',
       // 数据库名
-      database: 'mobile_pub',
+      database: 'test',
     },
     // ...
   },
@@ -111,11 +108,35 @@ exports.mysql = {
 使用方式：
 
 ```js
-const client1 = app.mysql.get('client1');
+const client1 = app.mysql.get('db1');
 client1.query(sql, values);
 
-const client2 = app.mysql.get('client2');
+const client2 = app.mysql.get('db2');
 client2.query(sql, values);
+```
+
+## 扩展
+
+### app.js
+
+#### app.mysql
+
+如果开启了 `config.mysql.app = true`，则会在 app 上注入 [ali-rds] 客户端 的 [Singleton 单例](https://github.com/eggjs/egg/blob/master/lib/core/singleton.js)。
+
+```js
+app.mysql.query(sql);
+app.mysql.get('db1').query(sql);
+```
+
+### agent.js
+
+#### agent.mysql
+
+如果开启了 `config.mysql.agent = true`，则会在 agent 上注入 [ali-rds] 客户端 的 [Singleton 单例](https://github.com/eggjs/egg/blob/master/lib/core/singleton.js)。
+
+```js
+agent.mysql.query(sql);
+agent.mysql.get('db1').query(sql);
 ```
 
 ## CRUD 使用指南
@@ -246,3 +267,6 @@ Please open an issue [here](https://github.com/eggjs/egg/issues).
 ## License
 
 [MIT](LICENSE)
+
+
+[ali-rds]: https://github.com/ali-sdk/ali-rds
