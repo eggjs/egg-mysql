@@ -3,17 +3,17 @@
 module.exports = {
   write: true,
   prefix: '^',
-  test: [
-    'test',
-    'benchmark',
-  ],
+   test: [
+     'test',
+     'benchmark',
+   ],
   devdep: [
-    'egg',
     'egg-bin',
     'autod',
     'eslint',
     'eslint-config-egg',
     'supertest',
+    'should',
   ],
   exclude: [
     './test/fixtures',

@@ -14,6 +14,7 @@ describe('test/mysql.test.js', () => {
   before(() => {
     app = mm.app({
       baseDir: 'apps/mysqlapp',
+      plugin: 'mysql',
     });
     return app.ready();
   });
@@ -98,20 +99,19 @@ describe('test/mysql.test.js', () => {
   });
 
   it('should agent error when password wrong on multi clients', done => {
+    mm(process.env, 'EGG_LOG', 'NONE');
     const app = mm.app({
       baseDir: 'apps/mysqlapp-multi-client-wrong',
+      plugin: 'mysql',
     });
     app.ready(() => {
       throw new Error('should not run this');
     });
-    // wait agent init
-    setTimeout(() => {
-      app.agent.on('error', err => {
-        if (err.message.indexOf('ER_ACCESS_DENIED_ERROR') !== -1) {
-          done();
-        }
-      });
-    }, 10);
+    app.agent.on('error', err => {
+      if (err.message.indexOf('ER_ACCESS_DENIED_ERROR') !== -1) {
+        done();
+      }
+    });
   });
 
   it('should queryOne work on transaction', function* () {
