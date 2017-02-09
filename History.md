@@ -1,5 +1,5 @@
 
-1.1.0 / 2017-02-04
+2.0.0 / 2017-02-09
 ==================
 
   * feat: remove app.instrument and fix test (#5)
