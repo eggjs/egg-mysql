@@ -103,7 +103,6 @@ describe('test/mysql.test.js', () => {
     });
     app.ready(err => {
       assert(err.message.includes('ER_ACCESS_DENIED_ERROR'));
-      console.log(111, err);
       done();
     });
   });
