@@ -101,17 +101,10 @@ describe('test/mysql.test.js', () => {
     const app = mm.app({
       baseDir: 'apps/mysqlapp-multi-client-wrong',
     });
-    app.ready(() => {
-      throw new Error('should not run this');
+    app.ready(err => {
+      assert(err.message.includes('ER_ACCESS_DENIED_ERROR'));
+      done();
     });
-    // wait agent init
-    setTimeout(() => {
-      app.agent.on('error', err => {
-        if (err.message.indexOf('ER_ACCESS_DENIED_ERROR') !== -1) {
-          done();
-        }
-      });
-    }, 10);
   });
 
   it('should queryOne work on transaction', function* () {
