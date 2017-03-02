@@ -8,3 +8,5 @@ exports.mysql = {
   database: 'test',
   app:false
 };
+
+exports.keys = 'foo';
