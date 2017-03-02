@@ -25,3 +25,5 @@ exports.mysql = {
   }],
   agent: true,
 };
+
+exports.keys = 'foo';

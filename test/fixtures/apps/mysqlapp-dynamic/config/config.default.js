@@ -11,3 +11,5 @@ exports.mysql1 = {
   password: '',
   database: 'test'
 };
+
+exports.keys = 'foo';
