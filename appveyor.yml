@@ -13,3 +13,5 @@ test_script:
   - npm run ci
 
 build: off
+services:
+  - mysql
