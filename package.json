@@ -13,7 +13,7 @@
     "database"
   ],
   "dependencies": {
-    "ali-rds": "^2.6.1"
+    "ali-rds": "^3.0.0"
   },
   "devDependencies": {
     "autod": "^2.7.1",
