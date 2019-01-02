@@ -84,6 +84,15 @@ describe('test/mysql.test.js', () => {
     assert(row.id === user.id);
   });
 
+  it('should query one desc is NULL success', function* () {
+    const user = yield app.mysql.queryOne('select * from npm_auth where `desc` is NULL');
+    assert(user);
+    assert(typeof user.user_id === 'string' && user.user_id);
+
+    const row = yield app.mysql.get('npm_auth', { desc: null });
+    assert(row.id === user.id);
+  });
+
   it('should query one not exists return null', function* () {
     let user = yield app.mysql.queryOne('select * from npm_auth where id = -1');
     assert(!user);
