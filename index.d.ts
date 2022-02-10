@@ -36,6 +36,13 @@ interface EggMySQLCondition {
 }
 interface EggMySQLUpdateResult {
   affectedRows: number;
+  fieldCount: number;
+  insertId: number;
+  serverStatus: number;
+  warningCount: number;
+  message: string;
+  protocol41: boolean;
+  changedRows: number;
 }
 
 interface EggMySQLLiterals {
