@@ -52,7 +52,9 @@ interface EggMySQL {
   query: (
     sql: string,
     values: any[]
-  ) => Promise<EggMySQLSelectResult | EggMySQLUpdateResult | EggMySQLInsertResult>;
+  ) => Promise<
+    EggMySQLSelectResult | EggMySQLUpdateResult | EggMySQLInsertResult
+  >;
   /// create object into table
   create: (table: string, values: object) => Promise<EggMySQLUpdateResult>;
   /// update object of table
@@ -68,6 +70,11 @@ interface EggMySQL {
   ) => Promise<EggMySQLSelectResult>;
   /// begin a transaction
   beginTransaction: () => Promise<EggMySQLTransation>;
+  /// begin a scoped transaction
+  beginTransactionScope: (
+    codeBlock: (conn: EggMySQLTransation) => Promise<object>,
+    ctx: object
+  ) => Promise<EggMySQLTransation>;
 }
 
 interface EggMySQLTransation extends Omit<EggMySQL, "beginTransaction"> {
