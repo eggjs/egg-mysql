@@ -58,7 +58,7 @@ interface EggMySQL {
   /// query('update posts set hits = (hits + ?) where id = ?', [1, postId])
   query: (
     sql: string,
-    values: any[]
+    values?: any[]
   ) => Promise<
     EggMySQLSelectResult | EggMySQLUpdateResult | EggMySQLInsertResult
   >;
