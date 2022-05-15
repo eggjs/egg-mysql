@@ -65,7 +65,7 @@ interface EggMySQL {
   /// create object into table
   create: (table: string, values: object) => Promise<EggMySQLUpdateResult>;
   /// update object of table
-  update: (table: string, values: object) => Promise<EggMySQLUpdateResult>;
+  update: (table: string, values: object, condition?: EggMySQLCondition) => Promise<EggMySQLUpdateResult>;
   /// delete objects from table
   delete: (table: string, values: object) => Promise<EggMySQLUpdateResult>;
   /// insert object into table
