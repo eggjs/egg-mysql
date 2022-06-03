@@ -27,6 +27,6 @@ CREATE TABLE `npm_auth` (
   `desc` varchar(255) DEFAULT NULL,
   `password` varchar(250) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB;
 
 SET FOREIGN_KEY_CHECKS = 1;

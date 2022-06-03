@@ -8,7 +8,7 @@ exports.mysql = {
     password: '',
     database: 'test',
   },
-  agent:true
+  agent: true
 };
 
 exports.keys = 'foo';
