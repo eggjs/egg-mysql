@@ -116,7 +116,7 @@ client2.query(sql, values);
 
 ```js
 // insert
-const result = yield app.mysql.insert('posts', { title: 'Hello World' });
+const result = await app.mysql.insert('posts', { title: 'Hello World' });
 const insertSuccess = result.affectedRows === 1;
 ```
 
@@ -124,9 +124,9 @@ const insertSuccess = result.affectedRows === 1;
 
 ```js
 // get
-const post = yield app.mysql.get('posts', { id: 12 });
+const post = await app.mysql.get('posts', { id: 12 });
 // query
-const results = yield app.mysql.select('posts',{
+const results = await app.mysql.select('posts',{
   where: { status: 'draft' },
   orders: [['created_at','desc'], ['id','desc']],
   limit: 10,
@@ -144,14 +144,14 @@ const row = {
   otherField: 'other field value',
   modifiedAt: app.mysql.literals.now, // `now()` on db server
 };
-const result = yield app.mysql.update('posts', row);
+const result = await app.mysql.update('posts', row);
 const updateSuccess = result.affectedRows === 1;
 ```
 
 ### Delete
 
 ```js
-const result = yield app.mysql.delete('table-name', {
+const result = await app.mysql.delete('table-name', {
   name: 'fengmk2'
 });
 ```
@@ -164,32 +164,32 @@ const result = yield app.mysql.delete('table-name', {
 - disadventage: more handwritten code, Forgot catching error or cleanup will lead to serious bug.
 
 ```js
-const conn = yield app.mysql.beginTransaction();
+const conn = await app.mysql.beginTransaction();
 
 try {
-  yield conn.insert(table, row1);
-  yield conn.update(table, row2);
-  yield conn.commit();
+  await conn.insert(table, row1);
+  await conn.update(table, row2);
+  await conn.commit();
 } catch (err) {
   // error, rollback
-  yield conn.rollback(); // rollback call won't throw err
+  await conn.rollback(); // rollback call won't throw err
   throw err;
 }
 ```
 
 ###  Automatic control: Transaction with scope
 
-- API：`*beginTransactionScope(scope, ctx)`
+- API：`async beginTransactionScope(scope, ctx)`
   - `scope`: A generatorFunction which will execute all sqls of this transaction.
   - `ctx`: The context object of current request, it will ensures that even in the case of a nested transaction, there is only one active transaction in a request at the same time.
 - adventage: easy to use, as if there is no transaction in your code.
 - disadvantage: all transation will be successful or failed, cannot control precisely
 
 ```js
-const result = yield app.mysql.beginTransactionScope(function* (conn) {
+const result = await app.mysql.beginTransactionScope(async (conn) => {
   // don't commit or rollback by yourself
-  yield conn.insert(table, row1);
-  yield conn.update(table, row2);
+  await conn.insert(table, row1);
+  await conn.update(table, row2);
   return { success: true };
 }, ctx); // ctx is the context of current request, access by `this.ctx`.
 // if error throw on scope, will auto rollback
@@ -200,7 +200,7 @@ const result = yield app.mysql.beginTransactionScope(function* (conn) {
 ### Custom SQL splicing
 
 ```js
-const results = yield app.mysql.query('update posts set hits = (hits + ?) where id = ?', [1, postId]);
+const results = await app.mysql.query('update posts set hits = (hits + ?) where id = ?', [1, postId]);
 ```
 
 ### Literal
@@ -211,7 +211,7 @@ If you want to call literals or functions in mysql , you can use `Literal`.
 - NOW(): The database system time, you can obtain by `app.mysql.literals.now`.
 
 ```js
-yield app.mysql.insert(table, {
+await app.mysql.insert(table, {
   create_time: app.mysql.literals.now
 });
 
@@ -226,7 +226,7 @@ The following demo showed how to call `CONCAT(s1, ...sn)` funtion in mysql to do
 const Literal = app.mysql.literals.Literal;
 const first = 'James';
 const last = 'Bond';
-yield app.mysql.insert(table, {
+await app.mysql.insert(table, {
   id: 123,
   fullname: new Literal(`CONCAT("${first}", "${last}"`),
 });

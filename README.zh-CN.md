@@ -137,7 +137,7 @@ agent.mysql.get('db1').query(sql);
 
 ```js
 // 插入
-const result = yield app.mysql.insert('posts', { title: 'Hello World' });
+const result = await app.mysql.insert('posts', { title: 'Hello World' });
 const insertSuccess = result.affectedRows === 1;
 ```
 
@@ -145,9 +145,9 @@ const insertSuccess = result.affectedRows === 1;
 
 ```js
 // 获得一个
-const post = yield app.mysql.get('posts', { id: 12 });
+const post = await app.mysql.get('posts', { id: 12 });
 // 查询
-const results = yield app.mysql.select('posts',{
+const results = await app.mysql.select('posts',{
   where: { status: 'draft' },
   orders: [['created_at','desc'], ['id','desc']],
   limit: 10,
@@ -165,14 +165,14 @@ const row = {
   otherField: 'other field value',
   modifiedAt: app.mysql.literals.now, // `now()` on db server
 };
-const result = yield app.mysql.update('posts', row);
+const result = await app.mysql.update('posts', row);
 const updateSuccess = result.affectedRows === 1;
 ```
 
 ### Delete
 
 ```js
-const result = yield app.mysql.delete('table-name', {
+const result = await app.mysql.delete('table-name', {
   name: 'fengmk2'
 });
 ```
@@ -185,32 +185,32 @@ const result = yield app.mysql.delete('table-name', {
 - 缺点：手写代码比较多，不是每个人都能写好。忘记了捕获异常和 cleanup 都会导致严重 bug。
 
 ```js
-const conn = yield app.mysql.beginTransaction();
+const conn = await app.mysql.beginTransaction();
 
 try {
-  yield conn.insert(table, row1);
-  yield conn.update(table, row2);
-  yield conn.commit();
+  await conn.insert(table, row1);
+  await conn.update(table, row2);
+  await conn.commit();
 } catch (err) {
   // error, rollback
-  yield conn.rollback(); // rollback call won't throw err
+  await conn.rollback(); // rollback call won't throw err
   throw err;
 }
 ```
 
 ### 自动控制：Transaction with scope
 
-- API：`*beginTransactionScope(scope, ctx)`
+- API：`async beginTransactionScope(scope, ctx)`
   - `scope`: 一个 generatorFunction，在这个函数里面执行这次事务的所有 sql 语句。
   - `ctx`: 当前请求的上下文对象，传入 ctx 可以保证即便在出现事务嵌套的情况下，一次请求中同时只有一个激活状态的事务。
 - 优点：使用简单，不容易犯错，就感觉事务不存在的样子。
 - 缺点：整个事务要么成功，要么失败，无法做细粒度控制。
 
 ```js
-const result = yield app.mysql.beginTransactionScope(function* (conn) {
+const result = await app.mysql.beginTransactionScope(async (conn) => {
   // don't commit or rollback by yourself
-  yield conn.insert(table, row1);
-  yield conn.update(table, row2);
+  await conn.insert(table, row1);
+  await conn.update(table, row2);
   return { success: true };
 }, ctx); // ctx 是当前请求的上下文，如果是在 service 文件中，可以从 `this.ctx` 获取到
 // if error throw on scope, will auto rollback
@@ -220,7 +220,7 @@ const result = yield app.mysql.beginTransactionScope(function* (conn) {
 
 ### 自定义SQL拼接
 ```js
-const results = yield app.mysql.query('update posts set hits = (hits + ?) where id = ?', [1, postId]);
+const results = await app.mysql.query('update posts set hits = (hits + ?) where id = ?', [1, postId]);
 ```
 
 ### 表达式(Literal)
@@ -230,7 +230,7 @@ const results = yield app.mysql.query('update posts set hits = (hits + ?) where 
 - NOW(): 数据库当前系统时间，通过`app.mysql.literals.now`获取。
 
 ```js
-yield app.mysql.insert(table, {
+await app.mysql.insert(table, {
   create_time: app.mysql.literals.now
 });
 
@@ -244,7 +244,7 @@ yield app.mysql.insert(table, {
 const Literal = app.mysql.literals.Literal;
 const first = 'James';
 const last = 'Bond';
-yield app.mysql.insert(table, {
+await app.mysql.insert(table, {
   id: 123,
   fullname: new Literal(`CONCAT("${first}", "${last}"`),
 });
