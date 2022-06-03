@@ -1,4 +1,10 @@
 
+3.1.1 / 2022-06-03
+==================
+
+**fixes**
+  * [[`bb7856b`](http://github.com/eggjs/egg-mysql/commit/bb7856bbf8e363f2ee0ce9410204fd227c2ccd08)] - fix: mysql.update missing condition define (#18) (shangwenhe <<shangwenhe@users.noreply.github.com>>)
+
 3.1.0 / 2022-02-11
 ==================
 
