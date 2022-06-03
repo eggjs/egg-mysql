@@ -5,6 +5,13 @@
   "eggPlugin": {
     "name": "mysql"
   },
+  "files": [
+    "config",
+    "lib",
+    "agent.js",
+    "app.js",
+    "index.d.ts"
+  ],
   "keywords": [
     "egg",
     "eggPlugin",
@@ -13,22 +20,21 @@
     "database"
   ],
   "dependencies": {
-    "ali-rds": "^3.0.1"
+    "ali-rds": "^3.4.0"
   },
   "devDependencies": {
-    "autod": "^3.0.1",
-    "egg": "latest-1",
-    "egg-bin": "^4.7.0",
-    "egg-ci": "^1.8.0",
-    "egg-mock": "^3.17.1",
-    "eslint": "^4.19.1",
-    "eslint-config-egg": "^7.0.0",
+    "autod": "^3.1.2",
+    "egg": "^2.35.0",
+    "egg-bin": "^4.19.0",
+    "egg-ci": "^2.1.0",
+    "egg-mock": "^4.2.1",
+    "eslint": "^8.16.0",
+    "eslint-config-egg": "^11.1.0",
     "git-contributor": "^1.0.10",
-    "supertest": "^3.1.0",
-    "utility": "^1.13.1"
+    "utility": "^1.17.0"
   },
   "engines": {
-    "node": ">=6.0.0"
+    "node": ">=14.0.0"
   },
   "scripts": {
     "contributor": "git-contributor",
@@ -40,9 +46,14 @@
     "autod": "autod"
   },
   "ci": {
-    "version": "6, 8",
+    "version": "14, 16, 18",
     "license": true,
-    "services": "mysql"
+    "service": {
+      "mysql": {
+        "version": "5",
+        "db": "test"
+      }
+    }
   },
   "repository": {
     "type": "git",
