@@ -1,7 +1,6 @@
 'use strict';
 
 const assert = require('assert');
-const request = require('supertest');
 const mm = require('egg-mock');
 const utility = require('utility');
 const path = require('path');
@@ -18,21 +17,21 @@ describe('test/mysql.test.js', () => {
     return app.ready();
   });
 
-  beforeEach(function* () {
+  beforeEach(async () => {
     // init test datas
     try {
-      yield app.mysql.query(`insert into npm_auth set user_id = 'egg-${uid}-1', password = '1'`);
-      yield app.mysql.query(`insert into npm_auth set user_id = 'egg-${uid}-2', password = '2'`);
-      yield app.mysql.query(`insert into npm_auth set user_id = 'egg-${uid}-3', password = '3'`);
-      yield app.mysql.queryOne(`select * from npm_auth where user_id = 'egg-${uid}-3'`);
+      await app.mysql.query(`insert into npm_auth set user_id = 'egg-${uid}-1', password = '1'`);
+      await app.mysql.query(`insert into npm_auth set user_id = 'egg-${uid}-2', password = '2'`);
+      await app.mysql.query(`insert into npm_auth set user_id = 'egg-${uid}-3', password = '3'`);
+      await app.mysql.queryOne(`select * from npm_auth where user_id = 'egg-${uid}-3'`);
     } catch (err) {
       console.log('init test datas error: %s', err);
     }
   });
 
-  afterEach(function* () {
+  afterEach(async () => {
     // 清空测试数据
-    yield app.mysql.query(`delete from npm_auth where user_id like 'egg-${uid}%'`);
+    await app.mysql.query(`delete from npm_auth where user_id like 'egg-${uid}%'`);
   });
 
   after(done => {
@@ -45,16 +44,16 @@ describe('test/mysql.test.js', () => {
   afterEach(mm.restore);
 
   it('should query mysql user table success', () => {
-    return request(app.callback())
+    return app.httpRequest()
       .get('/')
       .expect(200);
   });
 
-  it('should query limit 2', function* () {
-    const users = yield app.mysql.query('select * from npm_auth order by id desc limit 2');
+  it('should query limit 2', async () => {
+    const users = await app.mysql.query('select * from npm_auth order by id desc limit 2');
     assert(users.length === 2);
 
-    const rows = yield app.mysql.select('npm_auth', {
+    const rows = await app.mysql.select('npm_auth', {
       orders: [[ 'id', 'desc' ]],
       limit: 2,
     });
@@ -63,41 +62,41 @@ describe('test/mysql.test.js', () => {
     assert.deepEqual(rows[1], users[1]);
   });
 
-  it('should update successfully', function* () {
-    const user = yield app.mysql.queryOne('select * from npm_auth order by id desc limit 10');
-    const result = yield app.mysql.update('npm_auth', { id: user.id, user_id: `79744-${uid}-update` });
+  it('should update successfully', async () => {
+    const user = await app.mysql.queryOne('select * from npm_auth order by id desc limit 10');
+    const result = await app.mysql.update('npm_auth', { id: user.id, user_id: `79744-${uid}-update` });
     assert(result.affectedRows === 1);
   });
 
-  it('should delete successfully', function* () {
-    const user = yield app.mysql.queryOne('select * from npm_auth order by id desc limit 10');
-    const result = yield app.mysql.delete('npm_auth', { id: user.id });
+  it('should delete successfully', async () => {
+    const user = await app.mysql.queryOne('select * from npm_auth order by id desc limit 10');
+    const result = await app.mysql.delete('npm_auth', { id: user.id });
     assert(result.affectedRows === 1);
   });
 
-  it('should query one success', function* () {
-    const user = yield app.mysql.queryOne('select * from npm_auth order by id desc limit 10');
+  it('should query one success', async () => {
+    const user = await app.mysql.queryOne('select * from npm_auth order by id desc limit 10');
     assert(user);
     assert(typeof user.user_id === 'string' && user.user_id);
 
-    const row = yield app.mysql.get('npm_auth', { user_id: user.user_id });
+    const row = await app.mysql.get('npm_auth', { user_id: user.user_id });
     assert(row.id === user.id);
   });
 
-  it('should query one desc is NULL success', function* () {
-    const user = yield app.mysql.queryOne('select * from npm_auth where `desc` is NULL');
+  it('should query one desc is NULL success', async () => {
+    const user = await app.mysql.queryOne('select * from npm_auth where `desc` is NULL');
     assert(user);
     assert(typeof user.user_id === 'string' && user.user_id);
 
-    const row = yield app.mysql.get('npm_auth', { desc: null });
+    const row = await app.mysql.get('npm_auth', { desc: null });
     assert(row.id === user.id);
   });
 
-  it('should query one not exists return null', function* () {
-    let user = yield app.mysql.queryOne('select * from npm_auth where id = -1');
+  it('should query one not exists return null', async () => {
+    let user = await app.mysql.queryOne('select * from npm_auth where id = -1');
     assert(!user);
 
-    user = yield app.mysql.get('npm_auth', { id: -1 });
+    user = await app.mysql.get('npm_auth', { id: -1 });
     assert(!user);
   });
 
@@ -116,9 +115,9 @@ describe('test/mysql.test.js', () => {
     });
   });
 
-  it('should queryOne work on transaction', function* () {
-    const result = yield app.mysql.beginTransactionScope(function* (conn) {
-      const row = yield conn.queryOne('select * from npm_auth order by id desc limit 10');
+  it('should queryOne work on transaction', async () => {
+    const result = await app.mysql.beginTransactionScope(async conn => {
+      const row = await conn.queryOne('select * from npm_auth order by id desc limit 10');
       return { row };
     }, {});
     assert(result.row);
@@ -179,7 +178,7 @@ describe('test/mysql.test.js', () => {
     });
 
     it('should query mysql user table success', () => {
-      return request(app.callback())
+      return app.httpRequest()
         .get('/')
         .expect(200);
     });
@@ -204,7 +203,7 @@ describe('test/mysql.test.js', () => {
     });
 
     it('should query mysql user table success', () => {
-      return request(app.callback())
+      return app.httpRequest()
         .get('/')
         .expect(200);
     });

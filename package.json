@@ -31,7 +31,6 @@
     "eslint": "^8.16.0",
     "eslint-config-egg": "^11.1.0",
     "git-contributor": "^1.0.10",
-    "supertest": "^6.2.3",
     "utility": "^1.17.0"
   },
   "engines": {
