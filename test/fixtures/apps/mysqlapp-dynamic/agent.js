@@ -12,5 +12,5 @@ module.exports = function(agent) {
   (async () => {
     const result = await agent.mysql1.query('select now() as currentTime;');
     fs.writeFileSync(p, JSON.stringify(result));
-  }).then(done, done);
+  })().then(done).catch(done);
 };
