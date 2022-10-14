@@ -25,7 +25,16 @@ interface EggMySqlConfig {
   clients?: EggMySQLClientsOption;
 }
 
-type EggMySQLInsertResult = object[];
+type EggMySQLInsertResult = {
+  affectedRows: number;
+  fieldCount: number;
+  insertId: number;
+  serverStatus: number;
+  warningCount: number;
+  message: string;
+  protocol41: boolean;
+  changedRows: number;
+};
 type EggMySQLSelectResult = object[];
 interface EggMySQLCondition {
   where?: object;
