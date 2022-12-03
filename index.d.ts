@@ -27,6 +27,7 @@ interface EggMySqlConfig {
 
 type EggMySQLInsertResult = object[];
 type EggMySQLSelectResult = object[];
+type EggMySQLGetResult = object;
 interface EggMySQLCondition {
   where?: object;
   orders?: [string, "desc" | "asc" | "DESC" | "ASC"][];
@@ -53,7 +54,12 @@ interface EggMySQLLiterals {
 interface EggMySQL {
   literals: EggMySQLLiterals;
   /// Returns mysql client instance.
-  get: (dbName: string) => EggMySQL;
+  get(dbName: string): EggMySQL;
+  get(
+    table: string,
+    where?: object,
+    condition?: EggMySQLCondition
+  ): Promise<EggMySQLGetResult>;
   /// execute sql e.g.
   /// query('update posts set hits = (hits + ?) where id = ?', [1, postId])
   query: (
