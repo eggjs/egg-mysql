@@ -23,14 +23,14 @@
     "ali-rds": "^3.4.0"
   },
   "devDependencies": {
-    "autod": "^3.1.2",
-    "egg": "^2.35.0",
-    "egg-bin": "^4.19.0",
+    "egg": "^3.5.0",
+    "egg-bin": "^5.5.0",
     "egg-ci": "^2.1.0",
-    "egg-mock": "^4.2.1",
+    "egg-mock": "^5.2.1",
     "eslint": "^8.16.0",
-    "eslint-config-egg": "^11.1.0",
+    "eslint-config-egg": "^12.1.0",
     "git-contributor": "^1.0.10",
+    "tsd": "^0.25.0",
     "utility": "^1.17.0"
   },
   "engines": {
@@ -38,12 +38,12 @@
   },
   "scripts": {
     "contributor": "git-contributor",
+    "tsd": "tsd",
     "test": "npm run lint -- --fix && npm run test-local",
     "test-local": "egg-bin test",
     "cov": "egg-bin cov",
     "lint": "eslint .",
-    "ci": "npm run lint && npm run cov",
-    "autod": "autod"
+    "ci": "npm run lint && npm run cov"
   },
   "ci": {
     "version": "14, 16, 18",
