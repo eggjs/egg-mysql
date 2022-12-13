@@ -4,16 +4,6 @@ import ".";
 
 const app = new Application();
 
-// To test get client
-expectType<{
-  select: Function;
-  query: Function;
-  get: Function;
-  create: Function;
-  beginTransaction: Function;
-  beginTransactionScope: Function;
-}>(app.mysql.get("table"));
-
 // To test get a row
 expectType<Promise<object>>(
   app.mysql.get("table", {
@@ -23,12 +13,12 @@ expectType<Promise<object>>(
 );
 
 // To test query
-expectType<Promise<object>>(
-  app.mysql.query("update posts set hits = (hits + ?) where id = ?", [1, 123])
-);
+expectType<
+  Promise<EggMySQLSelectResult | EggMySQLUpdateResult | EggMySQLInsertResult>
+>(app.mysql.query("update posts set hits = (hits + ?) where id = ?", [1, 123]));
 
 // To test select
-expectType<Promise<object>>(
+expectType<Promise<EggMySQLSelectResult>>(
   app.mysql.select("table", {
     where: {
       id: 1,
@@ -40,11 +30,7 @@ expectType<Promise<object>>(
 );
 
 // To test insert
-expectType<
-  Promise<{
-    insertId: number;
-  }>
->(
+expectType<Promise<EggMySQLInsertResult>>(
   app.mysql.insert("table", {
     id: 1,
     age: "18",
@@ -53,11 +39,7 @@ expectType<
 );
 
 // To test update
-expectType<
-  Promise<{
-    affectedRows: number;
-  }>
->(
+expectType<Promise<EggMySQLUpdateResult>>(
   app.mysql.update(
     "table",
     {
@@ -75,22 +57,14 @@ expectType<
 );
 
 // To test create
-expectType<
-  Promise<{
-    insertId: number;
-  }>
->(
+expectType<Promise<EggMySQLInsertResult>>(
   app.mysql.create("table", {
     age: "19",
   })
 );
 
 // To test delete
-expectType<
-  Promise<{
-    affectedRows: number;
-  }>
->(
+expectType<Promise<EggMySQLUpdateResult>>(
   app.mysql.delete("table", {
     id: 1,
   })
@@ -100,4 +74,4 @@ expectType<
 expectType<string>(app.mysql.literals.now);
 
 // To test customized literal.
-expectType<object>(new app.mysql.literals.Literal(`CONCAT("1", "2"`));
+expectType<{}>(new app.mysql.literals.Literal(`CONCAT("1", "2"`));
