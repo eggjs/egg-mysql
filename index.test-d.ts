@@ -4,6 +4,48 @@ import ".";
 
 const app = new Application();
 
+// Select Result
+expectType<EggMySQLSelectResult>([
+  {
+    id: 1,
+    name: "L",
+  },
+  {
+    id: 2,
+    name: "N",
+  },
+]);
+
+// Insert Result
+expectType<EggMySQLInsertResult>({
+  affectedRows: 1,
+  fieldCount: 2,
+  insertId: 0,
+  serverStatus: 2,
+  warningCount: 4,
+  message: "",
+  protocol41: true,
+  changedRows: 0,
+});
+
+// Update Result
+expectType<EggMySQLUpdateResult>({
+  affectedRows: 1,
+  fieldCount: 2,
+  insertId: 0,
+  serverStatus: 2,
+  warningCount: 4,
+  message: "",
+  protocol41: true,
+  changedRows: 0,
+});
+
+// Get Result
+expectType<EggMySQLGetResult>({
+  id: 1,
+  name: "L",
+});
+
 // To test get a row
 expectType<Promise<object>>(
   app.mysql.get("table", {
