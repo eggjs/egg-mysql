@@ -12,6 +12,7 @@ interface EggMySQLClientOption {
 }
 
 type Singleton<T> = {};
+type EggContext = any;
 
 interface EggMySQLClientsOption {
   [clientName: string]: EggMySQLClientOption;
@@ -25,7 +26,6 @@ interface EggMySqlConfig {
   clients?: EggMySQLClientsOption;
 }
 
-type EggMySQLInsertResult = object[];
 type EggMySQLSelectResult = object[];
 type EggMySQLGetResult = object;
 interface EggMySQLCondition {
@@ -46,53 +46,123 @@ interface EggMySQLUpdateResult {
   changedRows: number;
 }
 
-interface EggMySQLLiterals {
-  now: number;
-  Literal: Function;
+type EggMySQLInsertResult = EggMySQLUpdateResult;
+
+declare namespace EggMySQLLiterals {
+  /**
+   * NOW(): The database system time, you can obtain by app.mysql.literals.now.
+   */
+  const now: string;
+  /**
+   * Custom literal
+   * @example
+   * const Literal = app.mysql.literals.Literal;
+   * await app.mysql.insert(table, {
+   *   id: 123,
+   *   fullname: new Literal(`CONCAT("${first}", "${last}"`),
+   * });
+   */
+  class Literal {
+    constructor(pattern: string);
+  }
 }
 
 interface EggMySQL {
-  literals: EggMySQLLiterals;
-  /// Returns mysql client instance.
+  literals: typeof EggMySQLLiterals;
+  /**
+   * returns mysql client instance.
+   */
   get(dbName: string): EggMySQL;
-  get(
-    table: string,
-    where?: object,
-    condition?: EggMySQLCondition
-  ): Promise<EggMySQLGetResult>;
-  /// execute sql e.g.
-  /// query('update posts set hits = (hits + ?) where id = ?', [1, postId])
+  /**
+   * get a single object from database table.
+   * @param table tableName
+   * @param where Condition
+   * @example
+   * const post = await app.mysql.get('posts', { id: 12 });
+   */
+  get(table: string, where?: object): Promise<EggMySQLGetResult>;
+  /**
+   * execute sql query
+   * @example
+   * query('update posts set hits = (hits + ?) where id = ?', [1, postId])
+   */
   query: (
     sql: string,
     values?: any[]
   ) => Promise<
     EggMySQLSelectResult | EggMySQLUpdateResult | EggMySQLInsertResult
   >;
-  /// create object into table
+  /**
+   * create object into table
+   */
   create: (table: string, values: object) => Promise<EggMySQLUpdateResult>;
-  /// update object of table
-  update: (table: string, values: object, condition?: EggMySQLCondition) => Promise<EggMySQLUpdateResult>;
-  /// delete objects from table
+  /**
+   * update object of table
+   */
+  update: (
+    table: string,
+    values: object,
+    condition?: EggMySQLCondition
+  ) => Promise<EggMySQLUpdateResult>;
+  /**
+   * delete objects from table
+   */
   delete: (table: string, values: object) => Promise<EggMySQLUpdateResult>;
-  /// insert object into table
+  /**
+   * insert object into table
+   */
   insert: (table: string, values: object) => Promise<EggMySQLInsertResult>;
-  /// select objects from table
+  /**
+   * select objects from table
+   */
   select: (
     table: string,
     condition?: EggMySQLCondition
   ) => Promise<EggMySQLSelectResult>;
-  /// begin a transaction
+  /**
+   * begin a transaction
+   */
   beginTransaction: () => Promise<EggMySQLTransation>;
-  /// begin a scoped transaction
+  /**
+   * begin a scoped transaction
+   */
   beginTransactionScope: (
     codeBlock: (conn: EggMySQLTransation) => Promise<object>,
-    ctx: object
+    ctx: EggContext
   ) => Promise<EggMySQLTransation>;
 }
 
 interface EggMySQLTransation extends Omit<EggMySQL, "beginTransaction"> {
+  /**
+   * Commit this transaction.
+   */
   commit: () => Promise<void>;
+  /**
+   * Rollback this transaction.
+   */
   rollback: () => Promise<void>;
+  /**
+   * Whether this transaction has been commited.
+   */
+  readonly isCommit: boolean;
+  /**
+   * Whether this transaction has been rolled back.
+   */
+  readonly isRollback: boolean;
+  /**
+   * Get current mysql session's thread id.
+   */
+  readonly threadId: number;
+  /**
+   * Get current state.
+   * @example
+   * conn.state // e.g. "authenticated"
+   */
+  readonly state: string;
+  /**
+   * Get current config.
+   */
+  readonly config?: object;
 }
 
 declare module "egg" {
