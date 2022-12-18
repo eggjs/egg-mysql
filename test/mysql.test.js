@@ -34,11 +34,9 @@ describe('test/mysql.test.js', () => {
     await app.mysql.query(`delete from npm_auth where user_id like 'egg-${uid}%'`);
   });
 
-  after(done => {
-    app.mysql.end(err => {
-      app.close();
-      done(err);
-    });
+  after(async () => {
+    await app.mysql.end();
+    await app.close();
   });
 
   afterEach(mm.restore);
