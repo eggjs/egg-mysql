@@ -20,7 +20,7 @@
     "database"
   ],
   "dependencies": {
-    "ali-rds": "^3.4.0"
+    "ali-rds": "^4.0.1"
   },
   "devDependencies": {
     "egg": "^3.5.0",
