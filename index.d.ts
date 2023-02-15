@@ -60,6 +60,8 @@ interface EggMySQL {
     where?: object,
     condition?: EggMySQLCondition
   ): Promise<EggMySQLGetResult>;
+  /// get counts from table 
+  count: (table: string, where?: object) => Promise<number>;
   /// execute sql e.g.
   /// query('update posts set hits = (hits + ?) where id = ?', [1, postId])
   query: (
