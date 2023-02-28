@@ -12,7 +12,7 @@ on:
 jobs:
   Job:
     name: Node.js
-    uses: fengmk2/github-actions/.github/workflows/node-test-mysql.yml@support-services
+    uses: fengmk2/github-actions/.github/workflows/node-test-mysql.yml@master
     with:
       os: 'ubuntu-latest'
       version: '14, 16, 18'
