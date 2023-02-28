@@ -23,15 +23,13 @@
     "ali-rds": "^4.0.1"
   },
   "devDependencies": {
-    "egg": "^3.5.0",
-    "egg-bin": "^5.5.0",
-    "egg-ci": "^2.1.0",
-    "egg-mock": "^5.2.1",
+    "egg": "^3.15.0",
+    "egg-bin": "^6.1.2",
+    "egg-mock": "^5.10.6",
     "eslint": "^8.16.0",
     "eslint-config-egg": "^12.1.0",
-    "git-contributor": "^1.0.10",
-    "tsd": "^0.25.0",
-    "utility": "^1.17.0"
+    "git-contributor": "^2.0.0",
+    "tsd": "^0.25.0"
   },
   "engines": {
     "node": ">=14.0.0"
@@ -44,16 +42,6 @@
     "cov": "egg-bin cov",
     "lint": "eslint .",
     "ci": "npm run lint && npm run cov"
-  },
-  "ci": {
-    "version": "14, 16, 18",
-    "license": true,
-    "service": {
-      "mysql": {
-        "version": "5",
-        "db": "test"
-      }
-    }
   },
   "repository": {
     "type": "git",
