@@ -1,14 +1,12 @@
-'use strict';
-
 const assert = require('assert');
-const mm = require('egg-mock');
-const utility = require('utility');
+const { randomUUID } = require('crypto');
 const path = require('path');
 const fs = require('fs');
+const mm = require('egg-mock');
 
 describe('test/mysql.test.js', () => {
   let app;
-  const uid = utility.randomString();
+  const uid = randomUUID();
 
   before(() => {
     app = mm.app({
