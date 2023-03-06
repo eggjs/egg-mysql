@@ -1,5 +1,16 @@
 # Changelog
 
+## [4.0.0](https://github.com/eggjs/egg-mysql/compare/v3.4.0...v4.0.0) (2023-03-06)
+
+
+### ⚠ BREAKING CHANGES
+
+* drop Node.js < 16 support
+
+### Features
+
+* refactor with TypeScript ([#27](https://github.com/eggjs/egg-mysql/issues/27)) ([4b7311d](https://github.com/eggjs/egg-mysql/commit/4b7311d2beb43a0338337c7128e016690ea04c9e))
+
 ## [3.4.0](https://github.com/eggjs/egg-mysql/compare/v3.3.0...v3.4.0) (2023-02-15)
 
 
