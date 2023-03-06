@@ -1,5 +1,3 @@
-'use strict';
-
 exports.mysql = {
   client: {
 	  host: '127.0.0.1',

@@ -1,5 +1,3 @@
-'use strict';
-
 module.exports = async ctx => {
   const users = await ctx.service.user.list(ctx);
 

@@ -15,4 +15,4 @@ jobs:
     uses: fengmk2/github-actions/.github/workflows/node-test-mysql.yml@master
     with:
       os: 'ubuntu-latest'
-      version: '14, 16, 18'
+      version: '16, 18'
