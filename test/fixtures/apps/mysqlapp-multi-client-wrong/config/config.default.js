@@ -1,5 +1,3 @@
-'use strict';
-
 exports.mysql = {
   clients: [{
     clientId: 'db1',

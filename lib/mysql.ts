@@ -1,12 +1,8 @@
-const RDSClient = require('ali-rds');
+import type { Application, Agent } from 'egg';
+import { RDSClient } from 'ali-rds';
 
 let count = 0;
-
-module.exports = app => {
-  app.addSingleton('mysql', createOneClient);
-};
-
-function createOneClient(config, app) {
+function createOneClient(config: Record<string, any>, app: Application | Agent) {
   app.coreLogger.info('[egg-mysql] connecting %s@%s:%s/%s',
     config.user, config.host, config.port, config.database);
   const client = new RDSClient(config);
@@ -18,4 +14,11 @@ function createOneClient(config, app) {
       index, rows[0].currentTime);
   });
   return client;
+}
+
+export function initPlugin(app: Application | Agent) {
+  app.addSingleton('mysql', createOneClient);
+  // alias to app.mysqls
+  // https://github.com/eggjs/egg/blob/9ad39f59991bd48633b8da4abe1da5eb79a1de62/lib/core/singleton.js#L38
+  (app as any).mysqls = (app as any).mysql;
 }

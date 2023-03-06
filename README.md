@@ -17,7 +17,7 @@ Aliyun rds client(support mysql portocal) for egg framework
 ## Install
 
 ```bash
-$ npm i egg-mysql --save
+npm i egg-mysql --save
 ```
 
 MySQL Plugin for egg, support egg application access to MySQL database.
@@ -26,55 +26,26 @@ This plugin based on [ali-rds](https://github.com/ali-sdk/ali-rds), if you want 
 
 ## Configuration
 
-Change `${app_root}/config/plugin.js` to enable MySQL plugin:
+Change `${app_root}/config/plugin.ts` to enable MySQL plugin:
 
-```js
-exports.mysql = {
-  enable: true,
-  package: 'egg-mysql',
-};
+```ts
+export default {
+  mysql: {
+    enable: true,
+    package: 'egg-mysql',
+  },
+}
 ```
 
-Configure database information in `${app_root}/config/config.default.js`:
+Configure database information in `${app_root}/config/config.default.ts`:
 
 ### Simple database instance
 
-```js
-exports.mysql = {
-  // database configuration
-  client: {
-    // host
-    host: 'mysql.com',
-    // port
-    port: '3306',
-    // username
-    user: 'test_user',
-    // password
-    password: 'test_password',
-    // database
-    database: 'test',    
-  },
-  // load into app, default is open
-  app: true,
-  // load into agent, default is close
-  agent: false,
-};
-```
-
-Usage:
-
-```js
-app.mysql.query(sql, values); // you can access to simple database instance by using app.mysql.
-```
-
-
-### Multiple database instance
-
-```js
-exports.mysql = {
-  clients: {
-    // clientId, access the client instance by app.mysql.get('clientId')
-    db1: {
+```ts
+export default {
+  mysql: {
+    // database configuration
+    client: {
       // host
       host: 'mysql.com',
       // port
@@ -86,35 +57,68 @@ exports.mysql = {
       // database
       database: 'test',
     },
-    // ...
+    // load into app, default is open
+    app: true,
+    // load into agent, default is close
+    agent: false,
   },
-  // default configuration for all databases
-  default: {
-
-  },
-
-  // load into app, default is open
-  app: true,
-  // load into agent, default is close
-  agent: false,
-};
+}
 ```
 
 Usage:
 
-```js
-const client1 = app.mysql.get('db1');
-client1.query(sql, values);
+```ts
+await app.mysql.query(sql, values); // you can access to simple database instance by using app.mysql.
+```
 
-const client2 = app.mysql.get('db2');
-client2.query(sql, values);
+### Multiple database instance
+
+```ts
+export default {
+  mysql: {
+    clients: {
+      // clientId, access the client instance by app.mysql.get('clientId')
+      db1: {
+        // host
+        host: 'mysql.com',
+        // port
+        port: '3306',
+        // username
+        user: 'test_user',
+        // password
+        password: 'test_password',
+        // database
+        database: 'test',
+      },
+      // ...
+    },
+    // default configuration for all databases
+    default: {
+
+    },
+    // load into app, default is open
+    app: true,
+    // load into agent, default is close
+    agent: false,
+  },
+}
+```
+
+Usage:
+
+```ts
+const client1 = app.mysqls.get('db1');
+await client1.query(sql, values);
+
+const client2 = app.mysqls.get('db2');
+await client2.query(sql, values);
 ```
 
 ## CRUD user guide
 
 ### Create
 
-```js
+```ts
 // insert
 const result = await app.mysql.insert('posts', { title: 'Hello World' });
 const insertSuccess = result.affectedRows === 1;
@@ -122,7 +126,7 @@ const insertSuccess = result.affectedRows === 1;
 
 ### Read
 
-```js
+```ts
 // get
 const post = await app.mysql.get('posts', { id: 12 });
 // query
@@ -136,7 +140,7 @@ const results = await app.mysql.select('posts',{
 
 ### Update
 
-```js
+```ts
 // update by primary key ID, and refresh
 const row = {
   id: 123,
@@ -150,9 +154,9 @@ const updateSuccess = result.affectedRows === 1;
 
 ### Delete
 
-```js
+```ts
 const result = await app.mysql.delete('table-name', {
-  name: 'fengmk2'
+  name: 'fengmk2',
 });
 ```
 
@@ -160,10 +164,10 @@ const result = await app.mysql.delete('table-name', {
 
 ### Manual control
 
-- adventage: ```beginTransaction```, ```commit``` or ```rollback``` can be completely under control by developer
+- adventage: `beginTransaction`, `commit` or `rollback` can be completely under control by developer
 - disadventage: more handwritten code, Forgot catching error or cleanup will lead to serious bug.
 
-```js
+```ts
 const conn = await app.mysql.beginTransaction();
 
 try {
@@ -177,7 +181,7 @@ try {
 }
 ```
 
-###  Automatic control: Transaction with scope
+### Automatic control: Transaction with scope
 
 - API：`async beginTransactionScope(scope, ctx)`
   - `scope`: A generatorFunction which will execute all sqls of this transaction.
@@ -185,7 +189,7 @@ try {
 - adventage: easy to use, as if there is no transaction in your code.
 - disadvantage: all transation will be successful or failed, cannot control precisely
 
-```js
+```ts
 const result = await app.mysql.beginTransactionScope(async (conn) => {
   // don't commit or rollback by yourself
   await conn.insert(table, row1);
@@ -199,8 +203,8 @@ const result = await app.mysql.beginTransactionScope(async (conn) => {
 
 ### Custom SQL splicing
 
-```js
-const results = await app.mysql.query('update posts set hits = (hits + ?) where id = ?', [1, postId]);
+```ts
+const results = await app.mysql.query('update posts set hits = (hits + ?) where id = ?', [ 1, postId ]);
 ```
 
 ### Literal
@@ -208,11 +212,12 @@ const results = await app.mysql.query('update posts set hits = (hits + ?) where 
 If you want to call literals or functions in mysql , you can use `Literal`.
 
 #### Inner Literal
+
 - NOW(): The database system time, you can obtain by `app.mysql.literals.now`.
 
-```js
+```ts
 await app.mysql.insert(table, {
-  create_time: app.mysql.literals.now
+  create_time: app.mysql.literals.now,
 });
 
 // INSERT INTO `$table`(`create_time`) VALUES(NOW())
@@ -222,7 +227,7 @@ await app.mysql.insert(table, {
 
 The following demo showed how to call `CONCAT(s1, ...sn)` funtion in mysql to do string splicing.
 
-```js
+```ts
 const Literal = app.mysql.literals.Literal;
 const first = 'James';
 const last = 'Bond';
@@ -241,6 +246,7 @@ Please open an issue [here](https://github.com/eggjs/egg/issues).
 ## License
 
 [MIT](LICENSE)
+
 <!-- GITCONTRIBUTOR_START -->
 
 ## Contributors

@@ -1,11 +1,13 @@
-const assert = require('assert');
-const { randomUUID } = require('crypto');
-const path = require('path');
-const fs = require('fs');
-const mm = require('egg-mock');
+import { strict as assert } from 'node:assert';
+import { randomUUID } from 'node:crypto';
+import path from 'node:path';
+import fs from 'node:fs';
+import mm, { MockApplication } from 'egg-mock';
+// import types from index.d.ts
+import type {} from '..';
 
-describe('test/mysql.test.js', () => {
-  let app;
+describe('test/mysql.test.ts', () => {
+  let app: MockApplication;
   const uid = randomUUID();
 
   before(() => {
@@ -101,13 +103,15 @@ describe('test/mysql.test.js', () => {
     assert(val === '\'\\\'\\"?><=!@#\'');
   });
 
-  it('should agent error when password wrong on multi clients', done => {
+  it('should agent error when password wrong on multi clients', async () => {
     const app = mm.app({
       baseDir: 'apps/mysqlapp-multi-client-wrong',
     });
-    app.ready(err => {
-      assert(err.message.includes('ER_ACCESS_DENIED_ERROR'));
-      done();
+    await assert.rejects(async () => {
+      await app.ready();
+    }, (err: Error) => {
+      assert.match(err.message, /ER_ACCESS_DENIED_ERROR/);
+      return true;
     });
   });
 
@@ -126,7 +130,6 @@ describe('test/mysql.test.js', () => {
     before(() => {
       app = mm.cluster({
         baseDir: 'apps/mysqlapp',
-        plugin: 'mysql',
       });
       return app.ready();
     });
@@ -144,7 +147,6 @@ describe('test/mysql.test.js', () => {
     before(() => {
       app = mm.app({
         baseDir: 'apps/mysqlapp-disable',
-        plugin: 'mysql',
       });
       return app.ready();
     });
@@ -160,7 +162,6 @@ describe('test/mysql.test.js', () => {
     before(() => {
       app = mm.cluster({
         baseDir: 'apps/mysqlapp-new',
-        plugin: 'mysql',
       });
       return app.ready();
     });
@@ -185,7 +186,6 @@ describe('test/mysql.test.js', () => {
     before(() => {
       app = mm.cluster({
         baseDir: 'apps/mysqlapp-dynamic',
-        plugin: 'mysql',
       });
       return app.ready();
     });
