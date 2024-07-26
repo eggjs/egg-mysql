@@ -90,6 +90,15 @@ describe('test/mysql.test.ts', () => {
     assert(row.id === user.id);
   });
 
+  it('should query with literal in where conditions', async () => {
+    const user = await app.mysql.queryOne('select * from npm_auth where `password` is not NULL');
+    assert(user);
+    assert(typeof user.user_id === 'string' && user.user_id);
+
+    const row = await app.mysql.get('npm_auth', { password: new app.mysql.literals.Literal('is not NULL') });
+    assert(row.id === user.id);
+  });
+
   it('should query one not exists return null', async () => {
     let user = await app.mysql.queryOne('select * from npm_auth where id = -1');
     assert(!user);
@@ -119,7 +128,7 @@ describe('test/mysql.test.ts', () => {
     const result = await app.mysql.beginTransactionScope(async conn => {
       const row = await conn.queryOne('select * from npm_auth order by id desc limit 10');
       return { row };
-    }, {});
+    });
     assert(result.row);
     assert(result.row.user_id && typeof result.row.user_id === 'string');
     assert(result.row.password === '3');
