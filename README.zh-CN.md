@@ -14,7 +14,7 @@
 
 MySQL 插件是为 egg 提供 MySQL 数据库访问的功能
 
-此插件基于 [ali-rds] 实现一个简单的配置封装，具体使用方法你还需要阅读 [ali-rds] 的文档。
+此插件基于 [@eggjs/rds] 实现一个简单的配置封装，具体使用方法你还需要阅读 [@eggjs/rds] 的文档。
 
 ## 安装
 
@@ -119,7 +119,7 @@ await client2.query(sql, values);
 
 #### app.mysql
 
-如果开启了 `config.mysql.app = true`，则会在 app 上注入 [ali-rds] 客户端 的 [Singleton 单例](https://github.com/eggjs/egg/blob/master/lib/core/singleton.js)。
+如果开启了 `config.mysql.app = true`，则会在 app 上注入 [@eggjs/rds] 客户端 的 [Singleton 单例](https://github.com/eggjs/egg/blob/master/lib/core/singleton.js)。
 
 ```ts
 await app.mysql.query(sql);
@@ -130,7 +130,7 @@ await app.mysqls.get('db1').query(sql);
 
 #### agent.mysql
 
-如果开启了 `config.mysql.agent = true`，则会在 agent 上注入 [ali-rds] 客户端 的 [Singleton 单例](https://github.com/eggjs/egg/blob/master/lib/core/singleton.js)。
+如果开启了 `config.mysql.agent = true`，则会在 agent 上注入 [@eggjs/rds] 客户端 的 [Singleton 单例](https://github.com/eggjs/egg/blob/master/lib/core/singleton.js)。
 
 ```ts
 await agent.mysql.query(sql);
@@ -270,16 +270,10 @@ Please open an issue [here](https://github.com/eggjs/egg/issues).
 
 [MIT](LICENSE)
 
-[ali-rds]: https://github.com/ali-sdk/ali-rds
-
-<!-- GITCONTRIBUTOR_START -->
-
 ## Contributors
 
-|[<img src="https://avatars.githubusercontent.com/u/156269?v=4" width="100px;"/><br/><sub><b>fengmk2</b></sub>](https://github.com/fengmk2)<br/>|[<img src="https://avatars.githubusercontent.com/u/893152?v=4" width="100px;"/><br/><sub><b>jtyjty99999</b></sub>](https://github.com/jtyjty99999)<br/>|[<img src="https://avatars.githubusercontent.com/u/360661?v=4" width="100px;"/><br/><sub><b>popomore</b></sub>](https://github.com/popomore)<br/>|[<img src="https://avatars.githubusercontent.com/u/32174276?v=4" width="100px;"/><br/><sub><b>semantic-release-bot</b></sub>](https://github.com/semantic-release-bot)<br/>|[<img src="https://avatars.githubusercontent.com/u/227713?v=4" width="100px;"/><br/><sub><b>atian25</b></sub>](https://github.com/atian25)<br/>|[<img src="https://avatars.githubusercontent.com/u/985607?v=4" width="100px;"/><br/><sub><b>dead-horse</b></sub>](https://github.com/dead-horse)<br/>|
-| :---: | :---: | :---: | :---: | :---: | :---: |
-[<img src="https://avatars.githubusercontent.com/u/6587734?v=4" width="100px;"/><br/><sub><b>AntiMoron</b></sub>](https://github.com/AntiMoron)<br/>|[<img src="https://avatars.githubusercontent.com/u/7298095?v=4" width="100px;"/><br/><sub><b>guoshencheng</b></sub>](https://github.com/guoshencheng)<br/>|[<img src="https://avatars.githubusercontent.com/u/37185773?v=4" width="100px;"/><br/><sub><b>Krryxa</b></sub>](https://github.com/Krryxa)<br/>|[<img src="https://avatars.githubusercontent.com/u/7459652?v=4" width="100px;"/><br/><sub><b>cnwangjie</b></sub>](https://github.com/cnwangjie)<br/>|[<img src="https://avatars.githubusercontent.com/u/613990?v=4" width="100px;"/><br/><sub><b>starandtina</b></sub>](https://github.com/starandtina)<br/>|[<img src="https://avatars.githubusercontent.com/u/5218468?v=4" width="100px;"/><br/><sub><b>shangwenhe</b></sub>](https://github.com/shangwenhe)<br/>
+[![Contributors](https://contrib.rocks/image?repo=eggjs/core)](https://github.com/eggjs/core/graphs/contributors)
 
-This project follows the git-contributor [spec](https://github.com/xudafeng/git-contributor), auto updated at `Mon Mar 06 2023 21:57:18 GMT+0800`.
+Made with [contributors-img](https://contrib.rocks).
 
-<!-- GITCONTRIBUTOR_END -->
+[@eggjs/rds]: https://github.com/node-modules/rds
