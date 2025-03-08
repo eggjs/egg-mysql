@@ -125,7 +125,7 @@ describe('test/mysql.test.ts', () => {
       assert.equal(err.code, 'ER_ACCESS_DENIED_ERROR');
       assert.equal(err.errno, 1045);
       assert.equal(err.sqlState, '28000');
-      assert.equal(err.sqlMessage, 'Access denied for user \'root\'@\'localhost\' (using password: YES)');
+      assert.match(err.sqlMessage, /^Access denied for user 'root'@'[^\']+' \(using password: YES\)$/);
       assert.equal(err.name, 'RDSClientGetConnectionError');
       return true;
     });

@@ -12,7 +12,7 @@
 [download-image]: https://img.shields.io/npm/dm/egg-mysql.svg?style=flat-square
 [download-url]: https://npmjs.org/package/egg-mysql
 
-Aliyun rds client(support mysql portocal) for egg framework
+Aliyun rds client(support mysql protocol) for egg framework
 
 ## Install
 

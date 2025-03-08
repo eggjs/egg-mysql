@@ -13,3 +13,5 @@ jobs:
     with:
       os: 'ubuntu-latest'
       version: '16, 18, 20, 22'
+    secrets:
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
