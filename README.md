@@ -12,7 +12,7 @@
 [download-image]: https://img.shields.io/npm/dm/egg-mysql.svg?style=flat-square
 [download-url]: https://npmjs.org/package/egg-mysql
 
-Aliyun rds client(support mysql portocal) for egg framework
+Aliyun rds client(support mysql protocol) for egg framework
 
 ## Install
 
@@ -22,7 +22,7 @@ npm i egg-mysql --save
 
 MySQL Plugin for egg, support egg application access to MySQL database.
 
-This plugin based on [ali-rds](https://github.com/ali-sdk/ali-rds), if you want to know specific usage, you should refer to the document of [ali-rds](https://github.com/ali-sdk/ali-rds).
+This plugin based on [@eggjs/rds], if you want to know specific usage, you should refer to the document of [@eggjs/rds].
 
 ## Configuration
 
@@ -225,7 +225,7 @@ await app.mysql.insert(table, {
 
 #### Custom literal
 
-The following demo showed how to call `CONCAT(s1, ...sn)` funtion in mysql to do string splicing.
+The following demo showed how to call `CONCAT(s1, ...sn)` function in mysql to do string splicing.
 
 ```ts
 const Literal = app.mysql.literals.Literal;
@@ -247,14 +247,10 @@ Please open an issue [here](https://github.com/eggjs/egg/issues).
 
 [MIT](LICENSE)
 
-<!-- GITCONTRIBUTOR_START -->
-
 ## Contributors
 
-|[<img src="https://avatars.githubusercontent.com/u/156269?v=4" width="100px;"/><br/><sub><b>fengmk2</b></sub>](https://github.com/fengmk2)<br/>|[<img src="https://avatars.githubusercontent.com/u/893152?v=4" width="100px;"/><br/><sub><b>jtyjty99999</b></sub>](https://github.com/jtyjty99999)<br/>|[<img src="https://avatars.githubusercontent.com/u/360661?v=4" width="100px;"/><br/><sub><b>popomore</b></sub>](https://github.com/popomore)<br/>|[<img src="https://avatars.githubusercontent.com/u/32174276?v=4" width="100px;"/><br/><sub><b>semantic-release-bot</b></sub>](https://github.com/semantic-release-bot)<br/>|[<img src="https://avatars.githubusercontent.com/u/227713?v=4" width="100px;"/><br/><sub><b>atian25</b></sub>](https://github.com/atian25)<br/>|[<img src="https://avatars.githubusercontent.com/u/985607?v=4" width="100px;"/><br/><sub><b>dead-horse</b></sub>](https://github.com/dead-horse)<br/>|
-| :---: | :---: | :---: | :---: | :---: | :---: |
-[<img src="https://avatars.githubusercontent.com/u/6587734?v=4" width="100px;"/><br/><sub><b>AntiMoron</b></sub>](https://github.com/AntiMoron)<br/>|[<img src="https://avatars.githubusercontent.com/u/7298095?v=4" width="100px;"/><br/><sub><b>guoshencheng</b></sub>](https://github.com/guoshencheng)<br/>|[<img src="https://avatars.githubusercontent.com/u/37185773?v=4" width="100px;"/><br/><sub><b>Krryxa</b></sub>](https://github.com/Krryxa)<br/>|[<img src="https://avatars.githubusercontent.com/u/7459652?v=4" width="100px;"/><br/><sub><b>cnwangjie</b></sub>](https://github.com/cnwangjie)<br/>|[<img src="https://avatars.githubusercontent.com/u/613990?v=4" width="100px;"/><br/><sub><b>starandtina</b></sub>](https://github.com/starandtina)<br/>|[<img src="https://avatars.githubusercontent.com/u/5218468?v=4" width="100px;"/><br/><sub><b>shangwenhe</b></sub>](https://github.com/shangwenhe)<br/>
+[![Contributors](https://contrib.rocks/image?repo=eggjs/core)](https://github.com/eggjs/core/graphs/contributors)
 
-This project follows the git-contributor [spec](https://github.com/xudafeng/git-contributor), auto updated at `Mon Mar 06 2023 21:57:18 GMT+0800`.
+Made with [contributors-img](https://contrib.rocks).
 
-<!-- GITCONTRIBUTOR_END -->
+[@eggjs/rds]: https://github.com/node-modules/rds

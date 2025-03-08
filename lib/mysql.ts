@@ -1,5 +1,5 @@
 import type { Application, Agent } from 'egg';
-import { RDSClient } from 'ali-rds';
+import { RDSClient } from '@eggjs/rds';
 
 let count = 0;
 function createOneClient(config: Record<string, any>, app: Application | Agent) {

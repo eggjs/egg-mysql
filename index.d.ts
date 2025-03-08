@@ -1,4 +1,4 @@
-import type { RDSClient } from 'ali-rds';
+import type { RDSClient } from '@eggjs/rds';
 
 type EggMySQL = RDSClient;
 
