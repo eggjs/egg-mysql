@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.1.0](https://github.com/eggjs/egg-mysql/compare/v4.0.0...v4.1.0) (2025-03-08)
+
+
+### Features
+
+* update ali-rds@6.4.0 ([#30](https://github.com/eggjs/egg-mysql/issues/30)) ([31ed369](https://github.com/eggjs/egg-mysql/commit/31ed369d954ce4bded89469907f81dcbde3060df))
+
 ## [4.0.0](https://github.com/eggjs/egg-mysql/compare/v3.4.0...v4.0.0) (2023-03-06)
 
 
