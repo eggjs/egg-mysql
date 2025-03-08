@@ -1,5 +1,37 @@
 # Changelog
 
+## [5.0.0](https://github.com/eggjs/egg-mysql/compare/v4.1.0...v5.0.0) (2025-03-08)
+
+
+### ⚠ BREAKING CHANGES
+
+* drop Node.js < 18 support
+* use mysql2 instead of mysql
+
+closes https://github.com/eggjs/egg-mysql/issues/31
+
+
+<!-- This is an auto-generated comment: release notes by coderabbit.ai
+-->
+## Summary by CodeRabbit
+
+- **Documentation**
+- Updated usage instructions and contributor displays with corrected
+typographical errors.
+- **Chores**
+	- Removed outdated contributor templates and automation workflows.
+- **Dependencies**
+- Migrated to a new database client package and raised the minimum
+Node.js version requirement.
+- **Tests**
+- Refined error validations in database operations for improved error
+reporting.
+<!-- end of auto-generated comment: release notes by coderabbit.ai -->
+
+### Features
+
+* use @eggjs/rds instead of ali-rds ([#32](https://github.com/eggjs/egg-mysql/issues/32)) ([3093528](https://github.com/eggjs/egg-mysql/commit/30935285268b1c674f9a70b4cb77501f89276467))
+
 ## [4.1.0](https://github.com/eggjs/egg-mysql/compare/v4.0.0...v4.1.0) (2025-03-08)
 
 
