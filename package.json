@@ -1,6 +1,6 @@
 {
   "name": "egg-mysql",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "description": "MySQL plugin for egg",
   "eggPlugin": {
     "name": "mysql"
@@ -20,7 +20,7 @@
     "database"
   ],
   "dependencies": {
-    "ali-rds": "^5.1.2"
+    "ali-rds": "^6.4.0"
   },
   "devDependencies": {
     "@eggjs/tsconfig": "^1.3.2",
